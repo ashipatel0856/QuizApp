@@ -1,8 +1,11 @@
 package com.quizApp.dto;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class QuestionDto {
 
     private String questionText;
