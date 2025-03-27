@@ -10,6 +10,8 @@ public class Quiz {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+    private String description;
+
 
     @ManyToOne
     @JoinColumn(name = "admin_id")
@@ -48,5 +50,13 @@ public class Quiz {
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

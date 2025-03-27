@@ -26,7 +26,6 @@ public class QuizController {
 
     @PostMapping
     public ResponseEntity<QuizDto> createQuiz(@RequestBody QuizDto quizDto) {
-        log.info("creating quiz {}", quizDto.getTitle());
         QuizDto quizDto1 = quizService.createQuiz(quizDto);
         return new ResponseEntity<>(quizDto1, HttpStatus.CREATED);
     }
