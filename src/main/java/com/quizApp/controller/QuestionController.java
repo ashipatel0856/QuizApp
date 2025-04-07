@@ -21,7 +21,7 @@ public class QuestionController {
 
 
 //    @PostMapping(produces = "application/json", consumes = "application/json")
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<QuestionDto> createQuestion(QuestionDto questionDto) {
         QuestionDto questionDto1 = questionService.createQuestion(questionDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(questionDto1);

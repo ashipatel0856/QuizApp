@@ -29,6 +29,7 @@ public class QuestionServiceImpl implements QuestionService {
         log.info("Creating new questions: {}");
         Question newQuestion = modelMapper.map(questionDto, Question.class);
         Question question = questionRepository.save(newQuestion);
+        newQuestion.setId(question.getId());
         return modelMapper.map(question, QuestionDto.class);
     }
 
