@@ -1,40 +1,15 @@
-package com.quizApp.entity;
+package com.quizApp.dto;
 
-import jakarta.persistence.*;
+import lombok.Data;
 
-import java.util.List;
-
-@Entity
-@Table(name = "players")
-public class Player {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Data
+public class PlayerDTO {
     private Long id;
 
     private String quizId;
     private String name;
-    private String email;
     private String correctAnswer;
     private String wrongAnswer;
-
-
-    @Column(nullable = true)
-
-    private boolean isVerified ;
-
-    public boolean isVerified() {
-        return isVerified;
-    }
-
-    public void setVerified(boolean verified) {
-        isVerified = verified;
-    }
-    //    @ManyToOne
-//    @JoinColumn(name = "quiz_id")
-////    private Quiz quiz;
-//
-//
 
     public Long getId() {
         return id;
@@ -74,13 +49,5 @@ public class Player {
 
     public void setWrongAnswer(String wrongAnswer) {
         this.wrongAnswer = wrongAnswer;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }

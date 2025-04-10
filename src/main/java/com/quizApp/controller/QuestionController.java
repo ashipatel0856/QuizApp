@@ -22,7 +22,7 @@ public class QuestionController {
 
 //    @PostMapping(produces = "application/json", consumes = "application/json")
     @PostMapping("/create")
-    public ResponseEntity<QuestionDto> createQuestion(QuestionDto questionDto) {
+    public ResponseEntity<QuestionDto> createQuestion(@RequestBody QuestionDto questionDto) {
         QuestionDto questionDto1 = questionService.createQuestion(questionDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(questionDto1);
     }

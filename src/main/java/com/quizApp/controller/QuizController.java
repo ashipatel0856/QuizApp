@@ -24,7 +24,7 @@ public class QuizController {
         this.quizService = quizService;
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<QuizDto> createQuiz(@RequestBody QuizDto quizDto) {
         QuizDto quizDto1 = quizService.createQuiz(quizDto);
         quizDto1.setId(quizDto1.getId());
@@ -50,10 +50,4 @@ public class QuizController {
         return new ResponseEntity<>(quizDto1, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{quizId}")
-    public ResponseEntity<QuizDto> deleteQuizById(@PathVariable Long quizId) {
-        log.info("deleting quiz with id {}", quizId);
-        quizService.deleteQuizById(quizId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
 }
