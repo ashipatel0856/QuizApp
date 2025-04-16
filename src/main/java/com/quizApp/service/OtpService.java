@@ -7,7 +7,6 @@ import com.quizApp.entity.Otp;
 import com.quizApp.entity.Player;
 import com.quizApp.repository.OtpRepository;
 import com.quizApp.repository.PlayerRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,13 +14,15 @@ import java.util.Random;
 
 @Service
 public class OtpService {
-   private final PlayerRepository playerRepository;
-   private final OtpRepository otpRepository;
-   private ModelMapper modelMapper;
 
-    public OtpService(PlayerRepository playerRepository, OtpRepository otpRepository) {
+    private final PlayerRepository playerRepository;
+    private final OtpRepository otpRepository;
+    private final EmailService emailService;
+
+    public OtpService(PlayerRepository playerRepository, OtpRepository otpRepository, EmailService emailService) {
         this.playerRepository = playerRepository;
         this.otpRepository = otpRepository;
+        this.emailService = emailService;
     }
 
     public OtpResponseDTO generateOtp(OtpRequestDTO otpRequestDTO) {
@@ -34,7 +35,7 @@ public class OtpService {
                 });
 
         String otpCode = String.format("%06d", new Random().nextInt(999999));
-        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(5);
+        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(1);
 
         Otp otp = new Otp();
         otp.setCode(otpCode);
@@ -43,10 +44,10 @@ public class OtpService {
 
         otpRepository.save(otp);
 
-        // Simulate sending OTP
-        System.out.println("OTP for " + player.getEmail() + ": " + otpCode);
+        // ✅ Send OTP via email
+        emailService.sendOtpEmail(player.getEmail(), otpCode);
 
-        return new OtpResponseDTO("OTP sent to email");
+        return new OtpResponseDTO("OTP sent to your email");
     }
 
     public OtpResponseDTO verifyOtp(OtpVerifyDTO otpVerifyDTO) {
@@ -61,12 +62,12 @@ public class OtpService {
         }
 
         if (otp.getExpiryTime().isBefore(LocalDateTime.now())) {
-            return new OtpResponseDTO("OTP expired");
+            return new OtpResponseDTO("OTP has to be  expired");
         }
 
         player.setVerified(true);
         playerRepository.save(player);
 
-        return new OtpResponseDTO("OTP verified successfully. Player verified.");
+        return new OtpResponseDTO("OTP verified successfully. ");
     }
 }
